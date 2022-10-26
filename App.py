@@ -122,10 +122,10 @@ def side_bar():
         '''
         st.subheader("Raw Dataset")
         
-        col1_raw , col2_raw = st.columns([4,4])
+        col1_raw , col2_raw = st.columns([5,3])
         
         with col1_raw :
-                st.dataframe(raw_data,height = 600)
+                st.dataframe(raw_data,height = 500)
         with col2_raw :
                 '''
                 The dataset is organised and maintained by the [United Nations](https://data.un.org/), 
@@ -180,8 +180,8 @@ def side_bar():
                                         tooltip = ["Value:Q", 'count():Q'],
                                         column=alt.Column('Type:N', sort=['Invertebrates','Vertebrates','Plants', 'Total'])
                                         ).properties(
-                                        width=250,
-                                        height=250
+                                        width=200,
+                                        height=200
                                         ).interactive(                                                
                                 )
         
@@ -219,8 +219,8 @@ def side_bar():
                                                 tooltip = ["Value:Q", 'Density:Q'],
                                                 column=alt.Column('Type:N', sort=['Invertebrates','Vertebrates','Plants', 'Total'])
                                         ).properties(
-                                        width=250,
-                                        height=250
+                                        width=200,
+                                        height=200
                                         ).interactive(                                                
                                 )
 
@@ -234,7 +234,7 @@ def side_bar():
         of quantiles of the distribution a box plot is used. Notice that even after transformation we are able to see some outliers in the dataset. This highly suggest either 
         error is present in data values or few points in the data are having tremendous effects on the distribution properties. 
         '''
-        chart_box_find = alt.Chart(longtrans_data, width=250, height=250).mark_boxplot().encode(
+        chart_box_find = alt.Chart(longtrans_data, width=200, height=200).mark_boxplot().encode(
                                         alt.Y("Value:Q",title = ' ',
                                         # scale= alt.Scale(),
                                         axis=alt.Axis(labels=True,grid=False, ticks=True)
@@ -274,7 +274,7 @@ def side_bar():
 
         colors = ['#7fc97f','#beaed4','#fdc086','#0099ff']
 
-        chart_line_find= alt.Chart(En_data, width = 600, height = 400 ).mark_line().encode(
+        chart_line_find= alt.Chart(En_data, width = 500, height = 400 ).mark_line().encode(
                                 x=alt.X("Year",axis=alt.Axis(title='',grid = False, )),
                                 y=alt.Y(
                                         alt.repeat("layer"), aggregate="sum", #title="Mean of US and Worldwide Gross"
@@ -286,7 +286,7 @@ def side_bar():
                                 ).configure_range(
                                 category=alt.RangeScheme(colors)
                                 )
-        line_col1 , line_col2 = st.columns([4,4])
+        line_col1 , line_col2 = st.columns([5,3])
 
         with line_col1 :
                 st.write(chart_line_find)
@@ -299,7 +299,8 @@ def side_bar():
         
         st.subheader("Scatter Plot")
         interval_sf = alt.selection_interval()
-        chart_scatter_find = alt.Chart(Entrans_data,width=400, height=250).mark_point().encode(
+        Entrans_data_scatter = Entrans_data.where(Entrans_data['Year'].isin([2021,2004])).dropna()
+        chart_scatter_find = alt.Chart(Entrans_data_scatter,width=400, height=250).mark_point().encode(
                         alt.X(alt.repeat("column"), type='quantitative',axis=alt.Axis(labels=True, grid=False, ticks=True)),
                         alt.Y(alt.repeat("row"), type='quantitative',axis=alt.Axis(labels=True, grid=False, ticks=True)),
                         color = 'Continent:N'
@@ -354,6 +355,7 @@ def side_bar():
         '''
         From the scatter plot, we can say that there are regions around the world who are experiencing sudden increase in number of threatened species.
         This indicates that there are more factors involved to increase in number and hence more data point is required to have a strong causation.
+
         '''
 
         st.markdown("Let's try to visualize highly affected countries and see how much they account for with respect to rest of the world.")
@@ -430,10 +432,8 @@ def side_bar():
         1. There is an increasing trend in number of threatened species across globe over time, with big spikes around 2018 and 2021
         2. Top 10 countries with highest number of threatened species constitute of 25-35 percent of the total number
         3. Around 20 % of the countries are responsible for about 80 % of the total number of threatened species in the world, The dataset is following the Pareto principal
-        4. If we look at sub regions of highly affected countries among different species, we will see clusters emerging with respect to their location. This suggests
-        more factors are affecting in increase in numbers, thus more data is required for further analysis. 
-        5. We can say that we do not have enough data points to prove a causation, the data is correlated but with the advent of a new attributes we might see a change in 
-        correlation and witness a Simpson's paradox. 
+        4. If we look at sub regions of highly affected countries among different species, we will see clusters emerging with respect to their location. This suggest more factors are affecting in increase in numbers, thus more data is required for further analysis. 
+        5. We can say that we do not have enough data points to prove a causation, the data is correlated but with the advent of a new attributes we might see a change in correlation and witness a Simpson's paradox. 
           
         The top 10 affected countries - Invertebrates 
 
