@@ -1,1 +1,1 @@
-CMSE_Project_App EDA on endangered species - Follow the link = https://shrouded-hollows-96126.herokuapp.com/
+CMSE_Project_App EDA on endangered species - Follow the link = https://adiark-eda-endengered-species-app-lhub04.streamlit.app/
